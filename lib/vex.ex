@@ -13,6 +13,6 @@ defmodule Vex do
 
   """
   def hello do
-    :world
+    "Welcome to Vex!"
   end
 end

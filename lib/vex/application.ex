@@ -8,12 +8,9 @@ defmodule Vex.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Vex.Worker.start_link(arg)
-      # {Vex.Worker, arg}
+      {Vex.Board, name: Vex.Board}
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Vex.Supervisor]
     Supervisor.start_link(children, opts)
   end
