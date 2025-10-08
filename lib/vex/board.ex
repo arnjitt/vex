@@ -33,10 +33,17 @@ defmodule Vex.Board do
 
   @impl true
   def handle_call({:read, recipient_id}, _from, state) do
-    recipient_messages = Map.get(state, recipient_id, [])
-    decrypted_messages = Enum.map(recipient_messages, &Vex.Crypto.decrypt/1)
+    # Counts total messages in the system
+    total_messages = state |> Map.values() |> List.flatten() |> length()
 
-    {:reply, decrypted_messages, state}
+    # Gets this recipients's real messages
+    real_messages = Map.get(state, recipient_id, []) |> Enum.map(&Vex.Crypto.decrypt/1)
+
+    # Placeholder Logic
+    placeholder_count = total_messages - length(real_messages)
+    placeholders = List.duplicate("???", placeholder_count)
+
+    {:reply, real_messages ++ placeholders, state}
   end
 
   # TESTING RECIPIENT-SPECIFIC MESSAGING
